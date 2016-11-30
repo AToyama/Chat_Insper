@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>Chat da Diversão</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+</head>
+<body>
+	<h1>Welcome</h1>
+
+
+	<div id="chatsContainer"></div>
+
+	<input type="text" id="username" placeholder="Enter your name...">
+	<br>
+
+	<input type="text" id="myMsg" placeholder="Write your message...">
+	<br>
+
+	<button id="sendBtn">Send</button>
+
+	<script>
+		$(function(){
+			var socket = io.connect();
+		});
+	</script>	
+</body>
+</html>
