@@ -1,0 +1,15 @@
+{
+  "name": "projeto_chat2",
+  "version": "1.0.0",
+  "description": "Real-time chat",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andre Toyama",
+  "license": "ISC",
+  "dependencies":{
+  	"socket.io":"*",
+  	"express":"*"
+  }
+}
