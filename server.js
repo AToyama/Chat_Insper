@@ -22,7 +22,7 @@ console.log('Online');
 app.use(express.static((__dirname, 'client')));
 
 
-io.sockets.on('connection',function(socket){
+io.on('connection',function(socket){
 	//Connect
 	connections.push(socket);
 	console.log('Connected: %s users connected: ', connections.length);
@@ -32,4 +32,9 @@ io.sockets.on('connection',function(socket){
 		connections.splice(connections.indexOf(socket), 1);
 		console.log('Disconnected: %s users connected', connections.length);
 	});
+
+	//emitindo a mensagem
+    socket.on('msg', function (incomingMsg) {
+        io.emit('msg', incomingMsg);
+    });
 });
