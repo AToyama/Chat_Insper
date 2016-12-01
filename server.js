@@ -44,10 +44,11 @@ app.get('/chat', function(req,res){
 });
 
 
-io.on('connection',function(socket){
+io.on('connection', function (socket) {
 	//Connect
 	connections.push(socket);
 	console.log('Connected: %s users connected: ', connections.length);
+
 	
 	//Disconnect
 	socket.on('disconnect', function(data){
@@ -56,7 +57,9 @@ io.on('connection',function(socket){
 	});
 
 	//emitindo a mensagem
-    socket.on('msg', function (incomingMsg, userName) {
+    socket.on('msg', function (incomingMsg , user) {
+
         io.emit('msg', incomingMsg, username);
+        console.log(connections);
     });
 });

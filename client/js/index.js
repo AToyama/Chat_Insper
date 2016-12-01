@@ -2,19 +2,20 @@ $(function(){
 
     var socket = io();
 
-    $('#sendBtn').click(function () {
+    $('#send').click(function () {
 
-        var message = $('#myMsg').val().trim();
+        var msg = $('#myMsg').val().trim();
 
-        if (message.length > 0) {
+        if (msg.length > 0) {
 
-            socket.emit('msg', message);
+            console.log(msg);
+            socket.emit('msg', msg);
         }
     });
 
-    socket.on('msg', function (incomingMsg, userName) {
+    socket.on('msg', function (incomingMsg, user) {
 
-        $('#chatsContainer').append(' ' + username + ': ' + incomingMsg + ' ');
+        $('#chatsContainer').append(user + ": " + incomingMsg);
         $('#chatsContainer').append('<br>');
-    })
-})
+    });
+});
