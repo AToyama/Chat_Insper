@@ -7,7 +7,11 @@ var socketIO = require("socket.io");
  //SocketIO escutar o htpp server
  var app = express();
  var httpServer = http.createServer(app);
- var io = socketIO.listen(httpServer);    
+ var io = socketIO.listen(httpServer);  
+ var bodyParser = require('body-parser');  
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 //array contando os sockets conectados
 connections = [];
@@ -19,14 +23,32 @@ httpServer.listen(process.env.PORT || 8080);
 console.log('Online');
 
 //acessando a pasta onde estarao os arquivos do "chat client"
-app.use(express.static((__dirname, 'client')));
+app.use(express.static(__dirname + '/client'));
+
+
+app.get('/', function(req,res){
+
+	res.sendFile(__dirname + '/client/home.html');
+});
+
+
+app.post('/', function(req,res){
+	username = req.body.username;
+	console.log(username);
+	res.redirect('/chat')
+
+});
+
+app.get('/chat', function(req,res){
+	res.sendFile(__dirname + '/client/chat.html');
+});
 
 
 io.on('connection',function(socket){
 	//Connect
 	connections.push(socket);
 	console.log('Connected: %s users connected: ', connections.length);
-
+	
 	//Disconnect
 	socket.on('disconnect', function(data){
 		connections.splice(connections.indexOf(socket), 1);
@@ -34,7 +56,7 @@ io.on('connection',function(socket){
 	});
 
 	//emitindo a mensagem
-    socket.on('msg', function (incomingMsg) {
-        io.emit('msg', incomingMsg);
+    socket.on('msg', function (incomingMsg, userName) {
+        io.emit('msg', incomingMsg, username);
     });
 });
