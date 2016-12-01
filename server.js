@@ -31,14 +31,16 @@ app.get('/', function(req,res){
 	res.sendFile(__dirname + '/client/home.html');
 });
 
-
+//pega o username do input da homepage
 app.post('/', function(req,res){
 	username = req.body.username;
 	console.log(username);
+	//vai para localhost:8080/chat
 	res.redirect('/chat')
 
 });
 
+//chat.html para localhost:8080/chat
 app.get('/chat', function(req,res){
 	res.sendFile(__dirname + '/client/chat.html');
 });
@@ -48,6 +50,7 @@ io.on('connection', function (socket) {
 	//Connect
 	connections.push(socket);
 	console.log('Connected: %s users connected: ', connections.length);
+	console.log(connections);
 
 	
 	//Disconnect
@@ -60,6 +63,6 @@ io.on('connection', function (socket) {
     socket.on('msg', function (incomingMsg , user) {
 
         io.emit('msg', incomingMsg, username);
-        console.log(connections);
+        
     });
 });
